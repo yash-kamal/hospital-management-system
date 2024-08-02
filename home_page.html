@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Website</title>
+    <style>
+        #div1 {
+            float: left;
+            width: 50%;
+        }
+
+        #div2 {
+            float: right;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Welcome to the Hospital Website</h1>
+    </div>
+    <div id="div2">
+        <h2>Register New Patient</h2>
+        <form id="registerForm">
+            <label for="newUsername">Username:</label><br>
+            <input type="text" id="newUsername" name="newUsername" required><br>
+            <label for="newName">Name:</label><br>
+            <input type="text" id="newName" name="newName" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <span id="emailError" style="color: red; display: none;">Invalid email format!</span><br>
+            <label for="newPassword">Password:</label><br>
+            <input type="password" id="newPassword" name="newPassword" required><br>
+            <label for="confirmPassword">Confirm Password:</label><br>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+            <label for="newAge">Age:</label><br>
+            <input type="number" id="newAge" name="newAge" required min="0" max="150" onclick="validateAge()"><br>
+            <span id="ageError" style="color: red; display: none;">Invalid age. Please enter a value between 0 and 150.</span><br>
+            <label for="phoneNumber">Phone Number:</label><br>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required maxlength="10" oninput="validatePhoneNumber()"><br>
+            <span id="phoneNumberError" style="color: red; display: none;">Phone number must contain only numeric values and be 10 digits long!</span><br>
+            <input type="submit" value="Register"><br>
+            <span id="passwordMatchError" style="color: red; display: none;">Passwords do not match. Please enter the same password in both fields.</span><br>
+        </form>
+    </div>
+    <div id="div1">
+        <div>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <label for="usertype">User Type:</label><br>
+                <select id="usertype" name="usertype">
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="admin">Admin</option>
+                </select><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userType = document.getElementById('usertype').value;
+            const password = document.getElementById('password').value;
+
+            // Perform login logic here
+            navigateToPage(userType);
+        });
+
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword === confirmPassword) {
+                // Passwords match, perform registration logic here
+
+                // After successful registration, you can choose what to do next (e.g., display a success message)
+                alert('Registration successful!');
+            } else {
+                // Passwords don't match, display an error message
+                document.getElementById('passwordMatchError').style.display = 'inline';
+            }
+        });
+
+        const emailInput = document.getElementById('email');
+        emailInput.addEventListener('blur', validateEmail);
+
+        function navigateToPage(userType) {
+            if (userType === 'patient') {
+                window.location.href = 'patients_page.html'; // Replace 'patients_page.html' with the actual patient page URL
+            } else if (userType === 'doctor') {
+                window.location.href = 'doctor_page.html'; // Replace 'doctor_page.html' with the actual doctor page URL
+            } else if (userType === 'admin') {
+                window.location.href = 'admin_page.html'; // Replace 'admin_page.html' with the actual admin page URL
+            }
+        }
+
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const email = emailInput.value;
+
+            // Regular expression for email validation
+            const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+            if (!emailPattern.test(email)) {
+                emailError.style.display = 'inline';
+            } else {
+                emailError.style.display = 'none';
+            }
+        }
+
+        function validatePhoneNumber() {
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            const phoneNumberError = document.getElementById('phoneNumberError');
+            const phoneNumber = phoneNumberInput.value;
+
+            // Regular expression for numeric values only
+            const numericPattern = /^\d+$/;
+
+            if (!numericPattern.test(phoneNumber) || phoneNumber.length !== 10) {
+                phoneNumberError.style.display = 'inline';
+            } else {
+                phoneNumberError.style.display = 'none';
+            }
+        }
+
+        function validateAge() {
+            const ageInput = document.getElementById('newAge');
+            const ageError = document.getElementById('ageError');
+            const age = parseInt(ageInput.value);
+
+            if (age < 0 || age > 150) {
+                ageError.style.display = 'inline';
+                // Reset the age input field to a valid value
+                ageInput.value = '';
+            } else {
+                ageError.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

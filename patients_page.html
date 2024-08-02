@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Website - Patient Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: center; /* Aligns the form to the middle horizontally */
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .flex-item {
+            width: 48%;
+        }
+        
+        form {
+            margin-top: 20px;
+            margin-bottom: 20px; /* Adds some space below the form */
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="submit"] {
+            margin-top: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+        /* Added CSS for the popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Welcome Patient!</h1>
+    </div>
+   
+    <div class="flex-container">
+        <div class="flex-item">
+            <h2>Register Your Information</h2>
+            <form id="patientRegistrationForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" max="150" required><br> <!-- Added the max attribute -->
+                <label for="height">Height (e.g., 5'8", 170 cm):</label>
+                <input type="text" id="height" name="height" required><br>
+                <label for="weight">Weight:</label>
+                <input type="text" id="weight" name="weight" required><br>
+                <label for="bloodGroup">Blood Group:</label>
+                <input type="text" id="bloodGroup" name="bloodGroup" required><br>
+                <input type="submit" value="Register">
+            </form>
+            
+            <a href="home_page.html">Logout</a>
+        </div>
+    </div>
+
+    <div id="successPopup" class="popup">
+        <h3>Registration Successful!</h3>
+        <p>Your information has been successfully registered.</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // JavaScript code to display the popup after successful registration
+        const form = document.getElementById('patientRegistrationForm');
+        const popup = document.getElementById('successPopup');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Show the popup
+            popup.style.display = 'block';
+
+            // Reset the form fields
+            form.reset();
+        });
+    </script>
+</body>
+</html>

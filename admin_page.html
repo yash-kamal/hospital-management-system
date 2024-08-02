@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Website - Admin Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .registration-container {
+            width: 70%;
+        }
+        
+        .titles-container {
+            width: 30%;
+        }
+        
+        .data-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .logout-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .logout-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .logout-button:hover {
+            background-color: #d32f2f;
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="submit"] {
+            margin-top: 10px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        ul li {
+            margin-bottom: 10px;
+        }
+        
+        ul li a {
+            text-decoration: none;
+        }
+        
+        ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Welcome Admin!</h1>
+    </div>
+    <div class="flex-container">
+        <div class="registration-container">
+            <h2>Register New User</h2>
+            <form id="registerUserForm" onsubmit="return validateForm()">
+                <label for="userType">User Type:</label>
+                <select id="userType" name="userType">
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="admin">Admin</option>
+                </select><br>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required oninput="validatePasswordMatch()"><br>
+                <span id="passwordMatchMessage" style="color: red;"></span><br>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required oninput="validateEmailFormat()"><br>
+                <span id="emailFormatMessage" style="color: red;"></span><br>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" title="Please enter a 10-digit phone number"><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div class="titles-container">
+            <h2>Admins Detail</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Admin ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Admins data goes here -->
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>john.doe@example.com</td>
+                        <td>1234567890</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>jane.smith@example.com</td>
+                        <td>9876543210</td>
+                    </tr>
+                    <!-- Add more rows for additional admins -->
+                </tbody>
+            </table>
+            
+            <h2>Patients Detail</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Patients data goes here -->
+                    <tr>
+                        <td>1</td>
+                        <td>Michael Johnson</td>
+                        <td>michael.johnson@example.com</td>
+                        <td>1111111111</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sarah Thompson</td>
+                        <td>sarah.thompson@example.com</td>
+                        <td>2222222222</td>
+                    </tr>
+                    <!-- Add more rows for additional patients -->
+                </tbody>
+            </table>
+            
+            <h2>Doctors Detail</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Doctor ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Doctors data goes here -->
+                    <tr>
+                        <td>1</td>
+                        <td>Dr. Robert Johnson</td>
+                        <td>robert.johnson@example.com</td>
+                        <td>3333333333</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Dr. Emily Thompson</td>
+                        <td>emily.thompson@example.com</td>
+                        <td>4444444444</td>
+                    </tr>
+                    <!-- Add more rows for additional doctors -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="logout-container">
+        <a href="home_page.html">Logout</a>
+    </div>
+
+    <script>
+        function validatePasswordMatch() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var passwordMatchMessage = document.getElementById("passwordMatchMessage");
+
+            if (password !== confirmPassword) {
+                passwordMatchMessage.textContent = "Passwords do not match.";
+            } else {
+                passwordMatchMessage.textContent = "";
+            }
+        }
+
+        function validateEmailFormat() {
+            var email = document.getElementById("email").value;
+            var emailFormatMessage = document.getElementById("emailFormatMessage");
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                emailFormatMessage.textContent = "Invalid email format.";
+            } else {
+                emailFormatMessage.textContent = "";
+            }
+        }
+
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // Registration successful
+            alert("Registration successful!");
+        }
+    </script>
+</body>
+</html>

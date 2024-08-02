@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Website - Welcome Doctor</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-top: 20px;
+        }
+        
+        #registrationDiv {
+            width: 50%;
+        }
+        
+        #detailsDiv {
+            width: 50%;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .logout-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #registrationDiv label {
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        function showRegistrationSuccess() {
+            alert("Registration successful!");
+        }
+    
+        function validatePassword() {
+            var password = document.getElementById("patientPassword").value;
+            var confirmPassword = document.getElementById("confirmpatientPassword").value;
+    
+            if (password !== confirmPassword) {
+                alert("Password did not match!");
+                return false; // Prevent form submission
+            }
+    
+            showRegistrationSuccess(); // Display registration successful message
+            return true; // Allow form submission
+        }
+    
+        function showEmailValidation() {
+            var email = document.getElementById("patientEmail").value;
+            var emailValidation = document.getElementById("emailValidation");
+            
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailValidation.innerHTML = "Invalid email format!";
+                emailValidation.style.display = "block";
+            } else {
+                emailValidation.style.display = "none";
+            }
+        }
+    
+        function showPasswordValidation() {
+            var password = document.getElementById("patientPassword").value;
+            var confirmPassword = document.getElementById("confirmpatientPassword").value;
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                var passwordValidation = document.getElementById("passwordValidation");
+                passwordValidation.innerHTML = "Password did not match!";
+                passwordValidation.style.display = "block";
+            } else {
+                var passwordValidation = document.getElementById("passwordValidation");
+                passwordValidation.style.display = "none";
+            }
+        }
+    
+        window.onload = function() {
+            document.getElementById("registerpatientForm").onsubmit = validatePassword;
+        };
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Doctor's Page</h1>
+    </div>
+    
+    <div id="container">
+        <div id="registrationDiv">
+            <h2>Register New Patients</h2>
+            <form id="registerpatientForm" onsubmit="return validatePassword()">
+                <label for="patientName">Name:</label><br>
+                <input type="text" id="patient" name="patientname" required><br>
+
+                <label for="patientEmail">Email:</label><br>
+                <input type="email" id="patientEmail" name="patientEmail" required oninput="showEmailValidation()"><br>
+                
+                <div id="emailValidation" style="display: none; color: red;"></div>
+
+                <label for="patientPhone">Phone Number:</label><br>
+                <input type="tel" id="patientPhone" name="patientPhone" required pattern="[0-9]{1,10}$" maxlength="10" required><br>
+
+                <label for="patientPassword">Password:</label><br>
+                <input type="password" id="patientPassword" name="patientPassword" required oninput="showPasswordValidation()"><br>
+
+                <label for="confirmpatientPassword">Confirm Password:</label><br>
+                <input type="password" id="confirmpatientPassword" name="confirmpatientPassword" required oninput="showPasswordValidation()"><br>
+                
+                <div id="passwordValidation" style="display: none; color: red;"></div>
+
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        
+        <div id="detailsDiv">
+            <div>
+                <h2>Patient Details</h2>
+                <table id="patientDetailsTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Medical Condition</th>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>janesmith@example.com</td>
+                        <td>9876543210</td>
+                        <td>Hypertension</td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>johndoe@example.com</td>
+                        <td>1234567890</td>
+                        <td>Diabetes</td>
+                    </tr>
+                    <tr>
+                        <td>Mary Johnson</td>
+                        <td>maryjohnson@example.com</td>
+                        <td>4567890123</td>
+                        <td>Asthma</td>
+                    </tr>
+                    <tr>
+                        <td>David Lee</td>
+                        <td>davidlee@example.com</td>
+                        <td>7890123456</td>
+                        <td>Arthritis</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <h2>Registered Doctors</h2>
+                <table id="registeredDoctorsTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Specialty</th>
+                    </tr>
+                    <tr>
+                        <td>Dr. John Doe</td>
+                        <td>johndoe@example.com</td>
+                        <td>1234567890</td>
+                        <td>Cardiology</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Rogan Paul</td>
+                        <td>rogandpaul@example.com</td>
+                        <td>0987654321</td>
+                        <td>Neurologist</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Chris Hemsworth</td>
+                        <td>cachris@example.com</td>
+                        <td>8235460780</td>
+                        <td>Oncologist</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Tony Stark</td>
+                        <td>ironman@example.com</td>
+                        <td>6254780154</td>
+                        <td>Dermatologist</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="logout-container">
+        <a href="home_page.html">Logout</a>
+    </div>
+</body>
+</html>
